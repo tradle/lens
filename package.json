@@ -1,0 +1,29 @@
+{
+  "name": "@tradle/lens",
+  "version": "1.0.0",
+  "description": "tools for validating and merging Tradle models and lenses for them",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test",
+    "lint": "eslint --quiet --ignore-path .gitignore .",
+    "prepush": "npm run lint && npm test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tradle/constants": "^2.1.0",
+    "@tradle/validate-model": "^4.2.0",
+    "clone": "^2.1.1",
+    "object.omit": "^3.0.0",
+    "xtend": "^4.0.1"
+  },
+  "devDependencies": {
+    "@tradle/custom-models": "github:tradle/custom-models",
+    "@tradle/merge-models": "^2.1.0",
+    "@tradle/models": "github:tradle/models",
+    "eslint": "^4.13.1",
+    "husky": "^0.14.3",
+    "tape": "^4.8.0"
+  }
+}
