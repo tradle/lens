@@ -58,10 +58,7 @@ module.exports = {
         "func-call-spacing": "error",
         "func-name-matching": "error",
         "func-names": "off",
-        "func-style": [
-            "error",
-            "declaration"
-        ],
+        "func-style": "off",
         "generator-star-spacing": "error",
         "global-require": "error",
         "guard-for-in": "off",
@@ -107,7 +104,7 @@ module.exports = {
         "no-caller": "error",
         "no-catch-shadow": "error",
         "no-confusing-arrow": "error",
-        "no-continue": "error",
+        "no-continue": "off",
         "no-div-regex": "error",
         "no-duplicate-imports": "error",
         "no-else-return": "error",
@@ -238,7 +235,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "space-infix-ops": "error",
+        "space-infix-ops": "off",
         "space-unary-ops": "error",
         "spaced-comment": "error",
         "strict": [

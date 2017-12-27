@@ -5,11 +5,13 @@ const validate = require('@tradle/validate-model')
 // const { metadataProperties } = validate.property
 // const metadataPropertiesObj = toObject(metadataProperties)
 const LENS_TYPE = 'tradle.Lens'
-const SUPPORTED_GROUPS = [
-  'required',
-  'hidden',
-  'propertyOrder'
-]
+const combineOverride = (fromModel, fromLens) => fromLens.slice()
+const combineMerge = (fromModel=[], fromLens=[]) => uniqStrings(fromModel.concat(fromLens))
+const groupCombiner = {
+  required: combineMerge,
+  hidden: combineMerge,
+  viewCols: combineOverride
+}
 
 module.exports = {
   merge,
@@ -31,11 +33,12 @@ function merge ({ models, model, lens }) {
 
   const merged = omit(model, ['properties'])
   merged.properties = mergeProperties({ model, lens })
-  SUPPORTED_GROUPS.forEach(group => {
-    if (lens[group]) {
-      merged[group] = uniqStrings((model[group] || []).concat(lens[group]))
-    }
-  })
+  for (let group in groupCombiner) {
+    if (!lens[group]) continue
+
+    const combine = groupCombiner[group]
+    merged[group] = combine(model[group], lens[group])
+  }
 
   validate.model(merged)
   validate.refs({ models, model: merged })
