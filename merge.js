@@ -1,8 +1,6 @@
 const _ = require('lodash')
 const { TYPE } = require('@tradle/constants')
 const validate = require('@tradle/validate-model')
-// const { metadataProperties } = validate.property
-// const metadataPropertiesObj = toObject(metadataProperties)
 const LENS_TYPE = 'tradle.Lens'
 const override = (fromModel, fromLens) => fromLens.slice()
 const mergeUniq = (fromModel=[], fromLens=[]) => uniqStrings(fromModel.concat(fromLens))
@@ -32,7 +30,12 @@ function merge ({ models, model, lens }) {
   expect(TYPE, LENS_TYPE, lens[TYPE])
 
   const merged = _.omit(model, ['properties'])
-  merged.properties = mergeProperties({ model, lens })
+  if (lens.properties) {
+    merged.properties = mergeProperties({ model, lens })
+  } else {
+    merged.properties = _.cloneDeep(model.properties)
+  }
+
   for (let group in groupCombiner) {
     if (!lens[group]) continue
 
