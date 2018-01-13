@@ -13,10 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "@tradle/constants": "^2.1.0",
-    "@tradle/validate-model": "^4.2.0",
-    "clone": "^2.1.1",
-    "object.omit": "^3.0.0",
-    "xtend": "^4.0.1"
+    "@tradle/validate-model": "^5.1.1",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "@tradle/custom-models": "github:tradle/custom-models",

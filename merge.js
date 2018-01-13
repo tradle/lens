@@ -1,16 +1,16 @@
-const omit = require('object.omit')
-const shallowClone = require('xtend')
+const _ = require('lodash')
 const { TYPE } = require('@tradle/constants')
 const validate = require('@tradle/validate-model')
 // const { metadataProperties } = validate.property
 // const metadataPropertiesObj = toObject(metadataProperties)
 const LENS_TYPE = 'tradle.Lens'
-const combineOverride = (fromModel, fromLens) => fromLens.slice()
-const combineMerge = (fromModel=[], fromLens=[]) => uniqStrings(fromModel.concat(fromLens))
+const override = (fromModel, fromLens) => fromLens.slice()
+const mergeUniq = (fromModel=[], fromLens=[]) => uniqStrings(fromModel.concat(fromLens))
 const groupCombiner = {
-  required: combineMerge,
-  hidden: combineMerge,
-  viewCols: combineOverride
+  required: mergeUniq,
+  hidden: mergeUniq,
+  viewCols: override,
+  editCols: override
 }
 
 module.exports = {
@@ -31,7 +31,7 @@ function merge ({ models, model, lens }) {
   expect('lens.model', model.id, lens.model)
   expect(TYPE, LENS_TYPE, lens[TYPE])
 
-  const merged = omit(model, ['properties'])
+  const merged = _.omit(model, ['properties'])
   merged.properties = mergeProperties({ model, lens })
   for (let group in groupCombiner) {
     if (!lens[group]) continue
@@ -57,7 +57,7 @@ function mergeProperties ({ model, lens }) {
 function mergeProperty ({ model, lens, propertyName }) {
   const prop = model.properties[propertyName]
   const propLens = lens.properties[propertyName]
-  return propLens ? shallowClone(prop, propLens) : shallowClone(prop)
+  return propLens ? _.clone(prop, propLens) : _.clone(prop)
 }
 
 function uniqStrings (arr) {
