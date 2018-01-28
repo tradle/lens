@@ -11,6 +11,13 @@ const groupCombiner = {
   editCols: override
 }
 
+const FORBIDDEN_METADATA = [
+  'type',
+  'range',
+  'ref',
+  'inlined'
+]
+
 module.exports = {
   merge,
   mergeProperties,
@@ -60,7 +67,16 @@ function mergeProperties ({ model, lens }) {
 function mergeProperty ({ model, lens, propertyName }) {
   const prop = model.properties[propertyName]
   const propLens = lens.properties[propertyName]
-  return propLens ? _.clone(prop, propLens) : _.clone(prop)
+  if (propLens) {
+    const forbidden = FORBIDDEN_METADATA.filter(mProp => propLens[mProp])
+    if (forbidden.length) {
+      throw new Error(`lens cannot override property metadata: ${forbidden.join(', ')}`)
+    }
+
+    return _.extend({}, prop, propLens)
+  }
+
+  return _.clone(prop)
 }
 
 function uniqStrings (arr) {
