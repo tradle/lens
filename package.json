@@ -1,6 +1,6 @@
 {
   "name": "@tradle/lens",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "tools for validating and merging Tradle models and lenses for them",
   "main": "index.js",
   "scripts": {
