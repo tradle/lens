@@ -13,14 +13,14 @@ module.exports = [
         title: 'Surname'
       },
       country: {
-        defaultValue: 'NZ',
+        default: 'NZ',
         // pin: [
         //   'NZ',
         //   'UK'
         // ]
       },
       nationality: {
-        defaultValue: 'NZ',
+        default: 'NZ',
         // pin: [
         //   'New Zealander',
         //   'English'
