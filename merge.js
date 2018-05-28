@@ -1,4 +1,7 @@
-const _ = require('lodash')
+const extend = require('lodash/extend')
+const clone = require('lodash/clone')
+const omit = require('lodash/omit')
+const cloneDeep = require('lodash/cloneDeep')
 const { TYPE } = require('@tradle/constants')
 const validate = require('@tradle/validate-model')
 const LENS_TYPE = 'tradle.Lens'
@@ -36,11 +39,11 @@ function merge ({ models, model, lens }) {
   expect('lens.model', model.id, lens.model)
   expect(TYPE, LENS_TYPE, lens[TYPE])
 
-  const merged = _.omit(model, ['properties'])
+  const merged = omit(model, ['properties'])
   if (lens.properties) {
     merged.properties = mergeProperties({ model, lens })
   } else {
-    merged.properties = _.cloneDeep(model.properties)
+    merged.properties = cloneDeep(model.properties)
   }
 
   for (let group in groupCombiner) {
@@ -73,10 +76,10 @@ function mergeProperty ({ model, lens, propertyName }) {
       throw new Error(`lens cannot override property metadata: ${forbidden.join(', ')}`)
     }
 
-    return _.extend({}, prop, propLens)
+    return extend({}, prop, propLens)
   }
 
-  return _.clone(prop)
+  return clone(prop)
 }
 
 function uniqStrings (arr) {
