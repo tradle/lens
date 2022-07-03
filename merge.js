@@ -11,6 +11,7 @@ const groupCombiner = {
   required: mergeUniq,
   hidden: mergeUniq,
   viewCols: override,
+  gridCols: override,
   editCols: override
 }
 
